@@ -203,7 +203,8 @@ def OptFlow():
             n=0
         ret,frame = cap.read()
         frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
+        if frame_gray == None:
+            continue 
         # calculate optical flow
         p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
         if  p1 == None:
