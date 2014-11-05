@@ -324,7 +324,7 @@ def ObjDetection():
         ret, frame2 = cap.read()
         next = cv2.cvtColor(frame2,cv2.COLOR_BGR2GRAY)
 
-        flow = cv2.calcOpticalFlowFarneback(prvs,next, None, 0.5, 3, 15, 3, 5, 1.2, 0)
+        flow = cv2.calcOpticalFlowFarneback(prvs,next, 0.5, 3, 15, 3, 5, 1.2, 0)
 
         mag, ang = cv2.cartToPolar(flow[...,0], flow[...,1])
         hsv[...,0] = ang*180/np.pi/2
