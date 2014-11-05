@@ -37,7 +37,7 @@ life = 0
 video_file= 'E:/Entertainment/Movies/Animation/Wall-E/WALL-e.avi'
 video_file= 'In/Sample.avi'
 video_file= 'In/MohmedSaad1.avi'
-video_file= 'In/car1.avi'
+#video_file= 'In/car1.avi'
 Video = 0
 IMAGE = 0
 
@@ -196,15 +196,25 @@ def OptFlow():
     # Create a mask image for drawing purposes
     mask = np.zeros_like(old_frame)
     n=0
-    while(1):
+    while(cap.isOpened()):
         n=n+1
         if n == 20:
             mask = np.zeros_like(old_frame)
             n=0
         ret,frame = cap.read()
+        if frame == None:
+            ret, old_frame = cap.read()
+            if  ret :
+                mask = np.zeros_like(old_frame)
+                old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
+                p0 = cv2.goodFeaturesToTrack(old_gray, mask = None, **feature_params)
+            print("Empty frame ...")
+            cv2.destroyAllWindows()
+            cap.release()
+
+            break
+
         frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        if frame_gray == None:
-            continue 
         # calculate optical flow
         p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
         if  p1 == None:
@@ -310,7 +320,7 @@ def ObjDetection():
     hsv = np.zeros_like(frame1)
     hsv[...,1] = 255
 
-    while(1):
+    while(cap.isOpened()):
         ret, frame2 = cap.read()
         next = cv2.cvtColor(frame2,cv2.COLOR_BGR2GRAY)
 
@@ -333,8 +343,8 @@ def ObjDetection():
     cap.release()
     cv2.destroyAllWindows()
 def test():
-    OptFlow()
-        
+    #OptFlow()
+    ObjDetection()  
 def main():
     if Video == 1:
         if life == 1:
