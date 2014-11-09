@@ -315,13 +315,22 @@ def OptFlowxx():
     cap.release()
 def ObjDetection():
     cap = cv2.VideoCapture(video_file)
+    while( not cap.isOpened()):
+        cap = cv2.VideoCapture(video_file)
+        print(cap.open(video_file))
+        return
     ret, frame1 = cap.read()
+    while(not ret):
+        print video_file
+        ret, frame1 = cap.read()
     prvs = cv2.cvtColor(frame1,cv2.COLOR_BGR2GRAY)
     hsv = np.zeros_like(frame1)
     hsv[...,1] = 255
 
     while(cap.isOpened()):
         ret, frame2 = cap.read()
+        if not ret:
+            return
         next = cv2.cvtColor(frame2,cv2.COLOR_BGR2GRAY)
 
         flow = cv2.calcOpticalFlowFarneback(prvs,next, 0.5, 3, 15, 3, 5, 1.2, 0)
@@ -343,8 +352,8 @@ def ObjDetection():
     cap.release()
     cv2.destroyAllWindows()
 def test():
-    #OptFlow()
-    ObjDetection()  
+    OptFlow()
+    #ObjDetection()  
 def main():
     if Video == 1:
         if life == 1:

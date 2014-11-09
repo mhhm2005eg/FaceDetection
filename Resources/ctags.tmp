@@ -1,0 +1,100 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_MOD_BY	Bostjan Mihoric	/ccompletion@gmail.com/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	/unofficial modification/
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	/unofficial modification/
+App	lk_track.py	80;"	class
+Bunch	common.py	15;"	class
+Chess	video.py	76;"	class
+PointsToVectors	lk_track.py	42;"	function
+RectSelector	common.py	153;"	class
+Sketcher	common.py	75;"	class
+StatValue	common.py	142;"	class
+Timer	common.py	134;"	function
+Vec	lk_track.py	36;"	class
+VideoSynthBase	video.py	38;"	class
+__init__	common.py	143;"	member	class:StatValue
+__init__	common.py	154;"	member	class:RectSelector
+__init__	common.py	16;"	member	class:Bunch
+__init__	common.py	76;"	member	class:Sketcher
+__init__	lk_track.py	37;"	member	class:Vec
+__init__	lk_track.py	81;"	member	class:App
+__init__	video.py	39;"	member	class:VideoSynthBase
+__init__	video.py	77;"	member	class:Chess
+__str__	common.py	18;"	member	class:Bunch	file:
+_jet_data	common.py	103;"	variable
+anorm	common.py	28;"	function
+anorm2	common.py	26;"	function
+anorm2	lk_track.py	24;"	namespace
+args	video.py	172;"	variable
+blockSize	lk_track.py	34;"	variable
+caps	video.py	177;"	variable
+ch	video.py	185;"	variable
+classes	video.py	124;"	variable
+clock	common.py	130;"	function
+clock	lk_track.py	25;"	namespace
+clock	video.py	34;"	namespace
+cmap_data	common.py	110;"	variable
+common	video.py	36;"	namespace
+contextmanager	common.py	10;"	namespace
+cos	video.py	35;"	namespace
+create_capture	video.py	133;"	function
+criteria	lk_track.py	29;"	variable
+cv2	common.py	8;"	namespace
+cv2	lk_track.py	22;"	namespace
+cv2	video.py	33;"	namespace
+dragging	common.py	185;"	member	class:RectSelector
+draw	common.py	178;"	member	class:RectSelector
+draw_keypoints	common.py	214;"	function
+draw_quads	video.py	99;"	member	class:Chess
+draw_str	common.py	71;"	function
+draw_str	lk_track.py	24;"	namespace
+empty	video.py	127;"	variable	class:Chess
+feature_params	lk_track.py	31;"	variable
+fn	video.py	190;"	variable
+getopt	video.py	167;"	namespace
+getsize	common.py	207;"	function
+grouper	common.py	189;"	function
+homotrans	common.py	31;"	function
+image_extensions	common.py	13;"	variable
+imgs	video.py	180;"	variable
+isOpened	video.py	73;"	member	class:VideoSynthBase
+it	common.py	11;"	namespace
+kmean	lk_track.py	46;"	function
+lk_params	lk_track.py	27;"	variable
+lookat	common.py	53;"	function
+main	lk_track.py	139;"	function
+make_cmap	common.py	112;"	function
+maxLevel	lk_track.py	28;"	variable
+mdot	common.py	211;"	function
+minDistance	lk_track.py	33;"	variable
+mosaic	common.py	194;"	function
+mtx2rvec	common.py	63;"	function
+nothing	common.py	127;"	function
+np	common.py	7;"	namespace
+np	lk_track.py	21;"	namespace
+np	video.py	32;"	namespace
+on_mouse	common.py	88;"	member	class:Sketcher
+onmouse	common.py	160;"	member	class:RectSelector
+os	common.py	9;"	namespace
+pi	video.py	35;"	namespace
+presets	video.py	126;"	variable
+qualityLevel	lk_track.py	32;"	variable
+read	video.py	57;"	member	class:VideoSynthBase
+rect2rect_mtx	common.py	43;"	function
+render	video.py	105;"	member	class:Chess
+render	video.py	54;"	member	class:VideoSynthBase
+run	lk_track.py	88;"	member	class:App
+shot_idx	video.py	178;"	variable
+shotdir	video.py	173;"	variable
+show	common.py	85;"	member	class:Sketcher
+sin	video.py	35;"	namespace
+sources	video.py	175;"	variable
+splitfn	common.py	21;"	function
+sys	lk_track.py	140;"	namespace
+sys	video.py	166;"	namespace
+to_rect	common.py	37;"	function
+update	common.py	146;"	member	class:StatValue
+video	lk_track.py	23;"	namespace
