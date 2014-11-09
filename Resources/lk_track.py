@@ -60,7 +60,7 @@ def PointsToVectors(lines):
 def kmean(points):
     if not points:
         return
-    cluster_n = 5
+    cluster_n = 10
     img_size = 512
     #print("input \n")
     #print(points)
@@ -112,14 +112,28 @@ def kmean(points):
         #print 'sampling distributions...'
         #points, _ = make_gaussians(cluster_n, img_size)
 
-        term_crit = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
-        ret, labels, centers = cv2.kmeans(np.float32(points), cluster_n, term_crit, 10, 0)
-
+        term_crit = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 3, 1.0)
+        ret, labels, centers = cv2.kmeans(np.float32(points), cluster_n, term_crit, 1, 0)
+        print(labels)
         img = np.zeros((height, width, 3), np.uint8)
         for (x, y), label in zip(np.int32(points), labels.ravel()):
             c = map(int, colors[label])
-            #print (x,y)
-            cv2.circle(img, (x, y), 1, c, 15)
+            print (c)
+            cv2.circle(img, (x, y), 1, c, -1)
+            #print center
+        i = 0
+        for center in(centers) :
+            #print (label)
+            ll = (labels.tolist())
+            #print(ll)
+            #print(ll.index([i]))
+            c = map(int,colors[i])
+            i = i+1
+            #print(c)
+            center=tuple(center)
+            rad = 10
+            font =1
+            cv2.circle(img, center , rad, c, font)
 
         cv2.imshow('gaussian mixture', img)
         ch = 0xFF & cv2.waitKey(0)
