@@ -55,20 +55,25 @@ class Vec:
         self.angle = angle
 def PointsToVectors(lines):
     n = 0
+    Min_vector_points = 5
+    Min_Angle = 30
     Pvector = []
     img = vis.copy() #np.ones((height, width, 3), np.uint8)
     #img = cv2.cvtColor(img,cv2.COLOR_GRAY2RGB)
     for line in lines:
-        if len(line) < 5:
+        if len(line) < Min_vector_points:
             continue
         v = Vec(n,line)
         Pvector.append( v )
         print(Pvector[n].avg , Pvector[n].angle)
+ 
         center=tuple(Pvector[n].avg)
         rad = 10
         font =1
         fact = math.pow(Pvector[n].angle, 2)%255
-        cv2.circle(img, center , rad, [fact,  fact ,fact], font)
+        if not Pvector[n].angle < Min_Angle:
+            cv2.circle(img, center , rad, [fact,  fact ,fact], font)
+        
         plt.subplot(221),plt.imshow(img, cmap = 'gray')
         plt.title('Input Image'), plt.xticks([]), plt.yticks([])
         #plt.show()
@@ -132,8 +137,9 @@ def kmean(points):
         #print 'sampling distributions...'
         #points, _ = make_gaussians(cluster_n, img_size)
 
-        term_crit = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 3, 1.0)
-        ret, labels, centers = cv2.kmeans(np.float32(points), cluster_n, term_crit, 1, 0)
+        term_crit = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
+        flags = cv2.KMEANS_RANDOM_CENTERS
+        ret, labels, centers = cv2.kmeans(np.float32(points), cluster_n, term_crit, 10, flags)
         #print(labels)
         img = frame_gray #np.zeros((height, width, 3), np.uint8)
         img = cv2.cvtColor(img,cv2.COLOR_GRAY2RGB)  
