@@ -23,7 +23,8 @@ import cv2
 import video
 from common import anorm2, draw_str
 from time import clock
-
+from matplotlib import pyplot as plt
+import math
 lk_params = dict( winSize  = (15, 15),
                   maxLevel = 2,
                   criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
@@ -34,6 +35,7 @@ feature_params = dict( maxCorners = 500,
                        blockSize = 7 )
 height, width, depth = 0 , 0,0                 
 class Vec:
+    ref = np.array([1,0])
     def __init__(self, ID, points):
         self.ref = np.array([1,0])
         self.avg = 0
@@ -41,22 +43,38 @@ class Vec:
         self.ID = ID
         points = np.array(points)
         self.avg=np.mean(points, axis=0)
-        dx= abs(points[-1].x - points[0].x)
-        dy= abs(points[-1].y - points[0].y)
+        dx= abs(points[-1][0] - points[0][0])
+        dy= abs(points[-1][1] - points[0][1])
         P =np.array([dx,dy])
-        dot =np.dot(ref, p)
-        x_modulus = np.sqrt((ref*ref).sum())
-        y_modulus = np.sqrt((p*p).sum())
+        dot =np.dot(self.ref, P)
+        x_modulus = np.sqrt((self.ref*self.ref).sum())
+        y_modulus = np.sqrt((P*P).sum())
         cos_angle = dot / x_modulus / y_modulus # cosinus of angle between x and y
         angle = np.arccos(cos_angle)
-        angle * 360 / 2 / np.pi # angle in degrees
-        
+        angle = angle * 360 / 2 / np.pi # angle in degrees
+        self.angle = angle
 def PointsToVectors(lines):
     n = 0
+    Pvector = []
+    img = np.ones((height, width, 3), np.uint8)
     for line in lines:
-        Pvector = vec(n,line)
+        if len(line) < 5:
+            continue
+        v = Vec(n,line)
+        Pvector.append( v )
+        print(Pvector[n].avg , Pvector[n].angle)
+        center=tuple(Pvector[n].avg)
+        rad = 10
+        font =1
+        fact = math.pow(Pvector[n].angle, 2)%255
+        cv2.circle(img, center , rad, [fact,  fact ,fact], font)
+        plt.subplot(221),plt.imshow(img, cmap = 'gray')
+        plt.title('Input Image'), plt.xticks([]), plt.yticks([])
+        #plt.show()
+        cv2.imshow('vectors', img)
         n = n + 1
-        
+
+
 def kmean(points):
     if not points:
         return
@@ -64,7 +82,7 @@ def kmean(points):
     img_size = 512
     #print("input \n")
     #print(points)
-
+    PointsToVectors(points)
     print __doc__
     points = np.array(points)
     shape = ( -1, 2 )
@@ -103,6 +121,7 @@ def kmean(points):
     #print(points)
     #else:
     #points=points.reshape( shape )
+    global colors
     colors = np.zeros((1, cluster_n, 3), np.uint8)
     colors[0,:] = 255
     colors[0,:,0] = np.arange(0, 180, 180.0/cluster_n)
@@ -114,11 +133,11 @@ def kmean(points):
 
         term_crit = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 3, 1.0)
         ret, labels, centers = cv2.kmeans(np.float32(points), cluster_n, term_crit, 1, 0)
-        print(labels)
+        #print(labels)
         img = np.zeros((height, width, 3), np.uint8)
         for (x, y), label in zip(np.int32(points), labels.ravel()):
             c = map(int, colors[label])
-            print (c)
+            #print (c)
             cv2.circle(img, (x, y), 1, c, -1)
             #print center
         i = 0
@@ -137,6 +156,7 @@ def kmean(points):
 
         cv2.imshow('gaussian mixture', img)
         ch = 0xFF & cv2.waitKey(0)
+        break
         if ch == 27:
             break
             
