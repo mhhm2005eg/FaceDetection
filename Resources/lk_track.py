@@ -56,7 +56,8 @@ class Vec:
 def PointsToVectors(lines):
     n = 0
     Pvector = []
-    img = np.ones((height, width, 3), np.uint8)
+    img = vis.copy() #np.ones((height, width, 3), np.uint8)
+    #img = cv2.cvtColor(img,cv2.COLOR_GRAY2RGB)
     for line in lines:
         if len(line) < 5:
             continue
@@ -134,7 +135,8 @@ def kmean(points):
         term_crit = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 3, 1.0)
         ret, labels, centers = cv2.kmeans(np.float32(points), cluster_n, term_crit, 1, 0)
         #print(labels)
-        img = np.zeros((height, width, 3), np.uint8)
+        img = frame_gray #np.zeros((height, width, 3), np.uint8)
+        img = cv2.cvtColor(img,cv2.COLOR_GRAY2RGB)  
         for (x, y), label in zip(np.int32(points), labels.ravel()):
             c = map(int, colors[label])
             #print (c)
@@ -174,10 +176,12 @@ class App:
             ret, frame = self.cam.read()
             if not ret:
                 return
+            global frame_gray
             frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             global height, width, depth
             height, width = frame_gray.shape
             #print(frame_gray.shape)
+            global vis
             vis = frame.copy()
 
             if len(self.tracks) > 0:
